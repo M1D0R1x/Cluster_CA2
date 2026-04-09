@@ -101,7 +101,7 @@ print(f"    App name      : {spark.sparkContext.appName}")
 #   - Payment info
 #   - TARGET: "Completed" column → "Completed" or "Not Completed"
 
-CSV_PATH = "Course_Completion_Prediction.csv"
+CSV_PATH = "/Users/veera/Desktop/Cluster_CA2/Course_Completion_Prediction.csv"
 
 # ── Safety check: does the file exist? ────────────────────────────────────
 if not os.path.isfile(CSV_PATH):
@@ -209,6 +209,10 @@ cleaned_df = (
 
 after_filter = cleaned_df.count()
 removed = before_filter - after_filter
+# Save cleaned DataFrame to CSV
+cleaned_df.coalesce(1).write.option("header", "true").mode("overwrite").csv("/Users/veera/Desktop/Cluster_CA2/cleaned_output")
+print("[✓] Cleaned CSV saved to: cleaned_output/")
+
 
 print(f"\n[✓] Rows before filtering : {before_filter:,}")
 print(f"[✓] Rows after filtering  : {after_filter:,}")
@@ -491,7 +495,7 @@ ax_pie.pie(
 ax_pie.set_title("Completion vs. Dropout (Ratio)", fontsize=14, fontweight="bold")
 
 plt.tight_layout()
-fig1.savefig("completion_vs_dropout.png", dpi=150, bbox_inches="tight")
+fig1.savefig("/Users/veera/Desktop/Cluster_CA2/completion_vs_dropout.png", dpi=150, bbox_inches="tight")
 print("\n[✓] Saved: completion_vs_dropout.png")
 plt.close(fig1)
 
@@ -530,7 +534,7 @@ legend_items = [
 ax2.legend(handles=legend_items, loc="lower right", fontsize=10)
 
 plt.tight_layout()
-fig2.savefig("model_feature_importance.png", dpi=150, bbox_inches="tight")
+fig2.savefig("/Users/veera/Desktop/Cluster_CA2/model_feature_importance.png", dpi=150, bbox_inches="tight")
 print("[✓] Saved: model_feature_importance.png")
 plt.close(fig2)
 
