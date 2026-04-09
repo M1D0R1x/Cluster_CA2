@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "pptxgenjs": "^4.0.1"
+    "pptxgenjs": "^4.0.1",
+    "puppeteer-core": "^24.40.0"
   }
 }
