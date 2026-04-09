@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOOC Course Completion Prediction - Project Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #000;
+            background: #fff;
+        }
+
+        @page {
+            size: A4;
+            margin: 20mm 25mm;
+        }
+
+        .page {
+            width: 210mm;
+            padding: 20mm 25mm;
+            margin: 0 auto;
+            background: #fff;
+            page-break-after: always;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        .page-break {
+            page-break-after: always;
+        }
+
+        /* ====== FRONT PAGE ====== */
+        .front-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100%;
+            padding: 10mm 20mm;
+        }
+
+        .front-page .appendix {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .front-page .project-title {
+            font-size: 20pt;
+            font-weight: bold;
+            line-height: 1.3;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+            max-width: 500px;
+        }
+
+        .front-page .report-label {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .front-page .submitted-by {
+            font-style: italic;
+            font-size: 12pt;
+            margin-bottom: 5px;
+        }
+
+        .front-page .student-name {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .front-page .fulfillment {
+            font-style: italic;
+            font-size: 12pt;
+            margin-bottom: 8px;
+            max-width: 400px;
+        }
+
+        .front-page .degree {
+            font-size: 16pt;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .front-page .in-text {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .front-page .branch {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .front-page .lpu-logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 15px;
+        }
+
+        .front-page .lpu-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .front-page .university-name {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .front-page .date {
+            font-size: 14pt;
+            font-weight: bold;
+        }
+
+        /* ====== CONTENT PAGES ====== */
+        h1 {
+            font-size: 16pt;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            color: #000;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 18px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            text-align: justify;
+            margin-bottom: 12px;
+            text-indent: 0;
+        }
+
+        .indent {
+            text-indent: 40px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 12px;
+        }
+
+        li {
+            margin-bottom: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 11pt;
+        }
+
+        table, th, td {
+            border: 1px solid #000;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        td {
+            padding: 8px 12px;
+            text-align: center;
+        }
+
+        .table-caption {
+            text-align: center;
+            font-weight: bold;
+            font-size: 11pt;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .figure {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .figure img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+        }
+
+        .figure-caption {
+            text-align: center;
+            font-weight: bold;
+            font-size: 10pt;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        .code-block {
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 12px 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 10pt;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 12px 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .toc {
+            margin: 30px 0;
+        }
+
+        .toc-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+            font-size: 12pt;
+        }
+
+        .toc-entry .dots {
+            flex: 1;
+            border-bottom: 1px dotted #666;
+            margin: 0 8px;
+            position: relative;
+            top: -4px;
+        }
+
+        .toc-entry.chapter {
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .toc-entry.sub {
+            padding-left: 30px;
+        }
+
+        .acknowledgment {
+            font-style: italic;
+            text-align: justify;
+        }
+
+        /* Page break helpers */
+        h1 {
+            page-break-before: auto;
+        }
+        h2, h3 {
+            page-break-after: avoid;
+        }
+        table, .figure, .code-block {
+            page-break-inside: avoid;
+        }
+
+        @media print {
+            .page {
+                width: auto;
+                padding: 0;
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .page:last-child {
+                page-break-after: auto;
+            }
+            body {
+                background: #fff;
+            }
+        }
+
+        .confusion-matrix td.correct {
+            background-color: #d4edda;
+            font-weight: bold;
+        }
+        .confusion-matrix td.incorrect {
+            background-color: #f8d7da;
+        }
+
+        .metric-highlight {
+            background-color: #e8f4fd;
+            border-left: 4px solid #2196F3;
+            padding: 12px 16px;
+            margin: 15px 0;
+            font-size: 11pt;
+        }
+
+        .pipeline-step {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 12px 16px;
+            margin: 10px 0;
+        }
+
+        .pipeline-step strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================== -->
+<!-- PAGE 1: FRONT PAGE -->
+<!-- ============================================================== -->
+<div class="page">
+    <div class="front-page">
+        <div class="appendix">APPENDIX I</div>
+
+        <div class="project-title">
+            MOOC COURSE COMPLETION PREDICTION USING APACHE SPARK
+        </div>
+
+        <div class="report-label">A PROJECT REPORT</div>
+
+        <div class="submitted-by"><em>Submitted by</em></div>
+        <div class="student-name">Saviti Veerababu - 12217467</div>
+
+        <div class="fulfillment"><em>in partial fulfillment for the award of the degree of</em></div>
+        <div class="degree">BACHELOR OF TECHNOLOGY</div>
+        <div class="in-text">IN</div>
+        <div class="branch">Computer Science and Engineering</div>
+
+        <!-- LPU Logo -->
+        <div class="lpu-logo">
+            <img src="logo.jpeg" alt="Lovely Professional University Logo">
+        </div>
+
+        <div class="university-name">Lovely Professional University, Punjab</div>
+        <div class="date">April 2026</div>
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 2: TABLE OF CONTENTS -->
+<!-- ============================================================== -->
+<div class="page">
+    <h1>TABLE OF CONTENTS</h1>
+
+    <div class="toc">
+        <div class="toc-entry chapter">
+            <span>1. Abstract</span><span class="dots"></span><span>3</span>
+        </div>
+        <div class="toc-entry chapter">
+            <span>2. Introduction</span><span class="dots"></span><span>4</span>
+        </div>
+        <div class="toc-entry sub">
+            <span>2.1 Background</span><span class="dots"></span><span>4</span>
+        </div>
+        <div class="toc-entry sub">
+            <span>2.2 Motivation</span><span class="dots"></span><span>4</span>
+        </div>
+        <div class="toc-entry chapter">
+            <span>3. Problem Statement</span><span class="dots"></span><span>5</span>
+        </div>
+        <div class="toc-entry chapter">
+            <span>4. Objectives</span><span class="dots"></span><span>5</span>
+        </div>
+        <div class="toc-entry chapter">
+            <span>5. Literature Review</span><span class="dots"></span><span>6</span>
+        </div>
+        <div class="toc-entry chapter">
+            <span>6. Methodology</span><span class="dots"></span><span>7</span>
+        </div>
+        <div class="toc-entry sub">
+            <span>6.1 Dataset Description</span><span class="dots"></span><span>7</span>
+        </div>
+        <div class="toc-entry sub">
+            <span>6.2 Data Preprocessing</span><span class="dots"></span><span>8</span>
+        </div>
+        <div class="toc-entry sub">
+            <span>6.3 Feature Engineering</span><span class="dots"></span><span>9</span>
+        </div>
+        <div class="toc-entry sub">
+            <span>6.4 Model Selection</span><span class="dots"></span><span>10</span>
+        </div>
+        <div class="toc-entry chapter">
+            <span>7. Implementation</span><span class="dots"></span><span>11</span>
+        </div>
+        <div class="toc-entry sub">
+            <span>7.1 Technology Stack</span><span class="dots"></span><span>11</span>
+        </div>
+        <div class="toc-entry sub">
+            <span>7.2 Pipeline Architecture</span><span class="dots"></span><span>11</span>
+        </div>
+        <div class="toc-entry sub">
+            <span>7.3 Code Implementation</span><span class="dots"></span><span>12</span>
+        </div>
+        <div class="toc-entry chapter">
+            <span>8. Results and Analysis</span><span class="dots"></span><span>14</span>
+        </div>
+        <div class="toc-entry sub">
+            <span>8.1 Model Performance Metrics</span><span class="dots"></span><span>14</span>
+        </div>
+        <div class="toc-entry sub">
+            <span>8.2 Confusion Matrix</span><span class="dots"></span><span>14</span>
+        </div>
+        <div class="toc-entry sub">
+            <span>8.3 Visualizations</span><span class="dots"></span><span>15</span>
+        </div>
+        <div class="toc-entry chapter">
+            <span>9. Conclusion</span><span class="dots"></span><span>17</span>
+        </div>
+        <div class="toc-entry chapter">
+            <span>10. Future Scope</span><span class="dots"></span><span>17</span>
+        </div>
+        <div class="toc-entry chapter">
+            <span>11. References</span><span class="dots"></span><span>18</span>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 3: ABSTRACT -->
+<!-- ============================================================== -->
+<div class="page">
+    <h1>1. ABSTRACT</h1>
+
+    <p class="indent">
+        Massive Open Online Courses (MOOCs) have revolutionized access to education globally, offering learners
+        the flexibility to pursue courses from prestigious institutions at their own pace. However, MOOCs continue
+        to suffer from extremely high dropout rates, often exceeding 90% across most platforms. Predicting whether
+        a learner will complete a course is a critical challenge for educators, platform designers, and
+        policymakers seeking to improve learner outcomes.
+    </p>
+
+    <p class="indent">
+        This project presents a scalable machine learning pipeline built using <strong>Apache Spark (PySpark)</strong>
+        and <strong>Spark MLlib</strong> to predict MOOC course completion from clickstream interaction logs
+        comprising <strong>100,000 student records</strong>. The pipeline performs end-to-end processing including
+        data loading, cleaning, feature engineering using 21 behavioral features derived from video engagement,
+        quiz activity, session patterns, and learner interaction metrics. A <strong>Logistic Regression</strong>
+        classifier is trained and evaluated using industry-standard metrics.
+    </p>
+
+    <p class="indent">
+        The model achieves an <strong>accuracy of 60.06%</strong>, an <strong>F1-Score of 0.6005</strong>,
+        and an <strong>AUC-ROC of 0.6392</strong>. While the accuracy is moderate, the results demonstrate
+        that clickstream behavioral features contain meaningful predictive signal for course completion.
+        The balanced nature of the dataset (51% dropout vs 49% completion) ensures these results are not
+        inflated by class imbalance. Feature importance analysis reveals that <strong>Video Completion Rate</strong>,
+        <strong>Progress Percentage</strong>, and <strong>Time Spent on the Platform</strong> are the strongest
+        predictors of course completion.
+    </p>
+
+    <p>
+        <strong>Keywords:</strong> MOOC, Course Completion Prediction, Apache Spark, PySpark, Logistic Regression,
+        Spark MLlib, Clickstream Data, Feature Engineering, Big Data Analytics.
+    </p>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 4: INTRODUCTION -->
+<!-- ============================================================== -->
+<div class="page">
+    <h1>2. INTRODUCTION</h1>
+
+    <h2>2.1 Background</h2>
+
+    <p class="indent">
+        Massive Open Online Courses (MOOCs) have emerged as a transformative force in education since
+        their inception in the early 2010s. Platforms such as Coursera, edX, Udemy, and Khan Academy
+        have made high-quality educational content accessible to millions of learners worldwide,
+        transcending geographical, financial, and institutional barriers. By 2025, the global MOOC
+        market is estimated to serve over 220 million learners, offering courses from top universities
+        and industry leaders.
+    </p>
+
+    <p class="indent">
+        Despite this unprecedented reach, MOOCs face a persistent and well-documented problem:
+        <strong>extremely high dropout rates</strong>. Research consistently shows that only 5-15%
+        of enrolled learners actually complete the course they sign up for. This attrition represents
+        not only a loss for learners who miss out on valuable skills and credentials, but also a
+        significant concern for course providers, educators, and funding bodies who invest resources
+        in content creation and platform maintenance.
+    </p>
+
+    <p class="indent">
+        Understanding <em>why</em> learners drop out and <em>predicting</em> who is at risk of
+        dropping out enables early intervention strategies such as personalized reminders, adaptive
+        content delivery, peer mentoring assignments, and targeted support services.
+    </p>
+
+    <h2>2.2 Motivation</h2>
+
+    <p class="indent">
+        The motivation for this project stems from the intersection of two critical domains:
+        <strong>big data analytics</strong> and <strong>educational technology (EdTech)</strong>.
+        With the volume of clickstream data generated by online learning platforms growing exponentially,
+        traditional data processing tools such as Pandas struggle with scalability. Apache Spark provides
+        a distributed computing framework that can handle millions of records efficiently, making it the
+        ideal tool for this task.
+    </p>
+
+    <p class="indent">
+        By leveraging Spark MLlib for machine learning, this project demonstrates how institutions
+        and MOOC providers can build production-grade predictive models that process large-scale learner
+        interaction data in real-time. The insights derived from such models can directly inform
+        strategies to improve course design, learner engagement, and ultimately, course completion rates.
+    </p>
+
+    <p class="indent">
+        Furthermore, this project serves as a practical application of <strong>cluster computing concepts</strong>,
+        demonstrating the use of distributed data processing, feature engineering pipelines, and model
+        evaluation at scale — all core principles of modern big data systems.
+    </p>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 5: PROBLEM STATEMENT + OBJECTIVES -->
+<!-- ============================================================== -->
+<div class="page">
+    <h1>3. PROBLEM STATEMENT</h1>
+
+    <p class="indent">
+        The problem addressed in this project is to <strong>predict whether an online learner will
+        complete a MOOC course</strong> based on their interaction logs and clickstream data. Given
+        a dataset of 100,000 student records containing demographic information, course metadata,
+        and engagement metrics (such as video completion rates, quiz scores, session durations, and
+        login frequency), the goal is to build a binary classification model that can accurately
+        distinguish between learners who will complete the course and those who will drop out.
+    </p>
+
+    <p class="indent">
+        Specifically, the project involves the following tasks as defined in the problem statement
+        (Project 4x, Roll No: 72):
+    </p>
+
+    <ol>
+        <li>Load MOOC clickstream data into Apache Spark.</li>
+        <li>Clean null values and filter out invalid session entries.</li>
+        <li>Use Spark MLlib to create features derived from video and quiz activity.</li>
+        <li>Build a Logistic Regression classifier to predict course completion.</li>
+        <li>Evaluate the model performance using Accuracy and F1-Score.</li>
+        <li>Visualize completion vs. dropout ratios.</li>
+    </ol>
+
+    <h1>4. OBJECTIVES</h1>
+
+    <p class="indent">The primary objectives of this project are:</p>
+
+    <ol>
+        <li><strong>Data Ingestion at Scale:</strong> Load and parse a large-scale MOOC clickstream
+            dataset (100K records, 39 columns) using Apache Spark's distributed DataFrame API.</li>
+        <li><strong>Data Quality Assurance:</strong> Perform comprehensive data cleaning including
+            null value handling with median imputation, removal of invalid session entries (negative
+            durations, zero logins), and data type standardization.</li>
+        <li><strong>Feature Engineering:</strong> Engineer 21 meaningful behavioral features from
+            raw clickstream data using Spark MLlib's VectorAssembler and StandardScaler, covering
+            video engagement, quiz performance, session patterns, and learner interaction metrics.</li>
+        <li><strong>Predictive Modeling:</strong> Build and train a Logistic Regression classifier
+            with L2 regularization to predict binary course completion outcomes.</li>
+        <li><strong>Model Evaluation:</strong> Rigorously evaluate model performance using multiple
+            metrics including Accuracy, F1-Score, AUC-ROC, Precision, Recall, and Confusion Matrix analysis.</li>
+        <li><strong>Visualization:</strong> Generate publication-quality visualizations including
+            class distribution charts and feature importance plots to communicate findings effectively.</li>
+    </ol>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 6: LITERATURE REVIEW -->
+<!-- ============================================================== -->
+<div class="page">
+    <h1>5. LITERATURE REVIEW</h1>
+
+    <p class="indent">
+        The prediction of student outcomes in online learning environments has been an active area of
+        research for over a decade. Several studies have explored different approaches to address the
+        MOOC dropout problem:
+    </p>
+
+    <h3>5.1 Traditional Machine Learning Approaches</h3>
+    <p class="indent">
+        Xing et al. (2016) applied Logistic Regression, Support Vector Machines (SVM), and Decision
+        Trees to predict MOOC dropout using features derived from forum participation and video
+        watching behavior. Their study achieved accuracies ranging from 65-72% on a dataset of
+        approximately 30,000 learners from edX. The study demonstrated that behavioral features,
+        particularly video engagement and forum activity, are strong predictors of persistence.
+    </p>
+
+    <h3>5.2 Deep Learning Methods</h3>
+    <p class="indent">
+        Fei and Yeung (2015) employed Recurrent Neural Networks (RNNs) to model temporal patterns
+        in student activity, capturing the sequential nature of learning behavior. While achieving
+        higher accuracy (∼78%), these models required significantly more computational resources
+        and lacked interpretability compared to simpler models like Logistic Regression.
+    </p>
+
+    <h3>5.3 Big Data and Distributed Computing</h3>
+    <p class="indent">
+        Chen et al. (2020) highlighted the scalability challenges of processing millions of MOOC
+        interaction logs and proposed the use of Apache Spark for distributed feature extraction
+        and model training. Their work demonstrated that Spark MLlib could achieve comparable
+        accuracy to single-machine solutions while processing 10x the data volume in a fraction
+        of the time.
+    </p>
+
+    <h3>5.4 Feature Engineering for MOOC Prediction</h3>
+    <p class="indent">
+        Whitehill et al. (2017) conducted a comprehensive analysis of which features are most
+        predictive of MOOC completion. They found that <strong>progress percentage</strong>,
+        <strong>time spent on the platform</strong>, and <strong>days since last login</strong>
+        were consistently ranked among the top predictors across different models and datasets.
+        This finding aligns closely with the results observed in our project.
+    </p>
+
+    <h3>5.5 Research Gap</h3>
+    <p class="indent">
+        While existing literature demonstrates the effectiveness of various ML approaches for MOOC
+        completion prediction, most studies either focus on small datasets (under 50K records) or
+        use single-machine tools like scikit-learn. This project bridges the gap by implementing
+        a complete end-to-end pipeline using Apache Spark on a 100K record dataset, demonstrating
+        the practical application of distributed computing for educational data mining.
+    </p>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 7-8: METHODOLOGY - DATASET -->
+<!-- ============================================================== -->
+<div class="page">
+    <h1>6. METHODOLOGY</h1>
+
+    <h2>6.1 Dataset Description</h2>
+
+    <p class="indent">
+        The dataset used in this project is <strong>Course_Completion_Prediction.csv</strong>,
+        containing <strong>100,000 student records</strong> with <strong>39 columns</strong>
+        capturing comprehensive information about learner demographics, course metadata, and
+        engagement behavior on a MOOC platform.
+    </p>
+
+    <p class="table-caption">Table 1: Dataset — Demographic Columns</p>
+    <table>
+        <thead>
+            <tr><th>Column</th><th>Description</th><th>Example Values</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Student_ID</td><td>Unique learner identifier</td><td>STU100000...</td></tr>
+            <tr><td>Name</td><td>Student name</td><td>—</td></tr>
+            <tr><td>Gender</td><td>Gender of student</td><td>Male, Female</td></tr>
+            <tr><td>Age</td><td>Age of the student</td><td>18-60</td></tr>
+            <tr><td>Education_Level</td><td>Highest qualification</td><td>Diploma, Bachelor, Master</td></tr>
+            <tr><td>Employment_Status</td><td>Current employment</td><td>Student, Employed, Self-Employed</td></tr>
+            <tr><td>City</td><td>City of residence</td><td>Indian cities</td></tr>
+        </tbody>
+    </table>
+
+    <p class="table-caption">Table 2: Dataset — Course Information Columns</p>
+    <table>
+        <thead>
+            <tr><th>Column</th><th>Description</th><th>Example Values</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Course_ID</td><td>Course identifier</td><td>C101–C108</td></tr>
+            <tr><td>Course_Name</td><td>Full course name</td><td>—</td></tr>
+            <tr><td>Category</td><td>Course category</td><td>Programming, Marketing, Design, Math, Business</td></tr>
+            <tr><td>Course_Level</td><td>Difficulty level</td><td>Beginner, Intermediate, Advanced</td></tr>
+            <tr><td>Course_Duration_Days</td><td>Total course length</td><td>30-180 days</td></tr>
+            <tr><td>Instructor_Rating</td><td>Instructor quality rating</td><td>1.0–5.0</td></tr>
+        </tbody>
+    </table>
+
+    <p class="table-caption">Table 3: Dataset — Engagement Metrics (Features)</p>
+    <table>
+        <thead>
+            <tr><th>Column</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Login_Frequency</td><td>How often the student logs in</td></tr>
+            <tr><td>Average_Session_Duration_Min</td><td>Average session length (minutes)</td></tr>
+            <tr><td>Video_Completion_Rate</td><td>Percentage of videos watched (0-100%)</td></tr>
+            <tr><td>Discussion_Participation</td><td>Forum engagement score</td></tr>
+            <tr><td>Time_Spent_Hours</td><td>Total hours on the platform</td></tr>
+            <tr><td>Days_Since_Last_Login</td><td>Recency indicator (days)</td></tr>
+            <tr><td>Quiz_Attempts</td><td>Number of quiz attempts</td></tr>
+            <tr><td>Quiz_Score_Avg</td><td>Average quiz score (0-100)</td></tr>
+            <tr><td>Assignments_Submitted</td><td>Number of assignments turned in</td></tr>
+            <tr><td>Assignments_Missed</td><td>Number of assignments missed</td></tr>
+            <tr><td>Progress_Percentage</td><td>Overall course progress (0-100%)</td></tr>
+            <tr><td><strong>Completed</strong></td><td><strong>Target variable: "Completed" / "Not Completed"</strong></td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 8-9: DATA PREPROCESSING -->
+<!-- ============================================================== -->
+<div class="page">
+    <h2>6.2 Data Preprocessing</h2>
+
+    <p class="indent">
+        Data preprocessing is a critical step in any machine learning pipeline. Raw clickstream data
+        is inherently noisy, containing null values, corrupted entries, and inconsistent formats.
+        The following preprocessing steps were applied:
+    </p>
+
+    <h3>6.2.1 Target Variable Conversion</h3>
+    <p class="indent">
+        The target column <code>"Completed"</code> contained string values ("Completed" and
+        "Not Completed"). These were converted to binary numeric labels: <strong>1</strong> for
+        completed courses and <strong>0</strong> for dropouts. This is a necessary transformation
+        as Spark MLlib's classification algorithms require numeric labels.
+    </p>
+
+    <div class="code-block">
+cleaned_df = raw_df.withColumn(
+    "label",
+    F.when(F.col("Completed") == "Completed", 1).otherwise(0)
+)
+    </div>
+
+    <h3>6.2.2 Null Value Handling</h3>
+    <p class="indent">
+        All 22 key numeric columns were inspected for null values. Where nulls were detected,
+        they were imputed using the <strong>median value</strong> of the respective column.
+        Median imputation was chosen over mean imputation because it is robust to outliers,
+        which are common in clickstream data (e.g., extremely long session durations from
+        users leaving tabs open).
+    </p>
+
+    <div class="code-block">
+for col_name in key_numeric_cols:
+    null_count = cleaned_df.filter(F.col(col_name).isNull()).count()
+    if null_count > 0:
+        median_val = cleaned_df.approxQuantile(col_name, [0.5], 0.01)[0]
+        cleaned_df = cleaned_df.fillna({col_name: median_val})
+    </div>
+
+    <h3>6.2.3 Invalid Entry Filtering</h3>
+    <p class="indent">
+        Records with physically impossible or logically invalid values were removed:
+    </p>
+    <ul>
+        <li><strong>Negative session duration:</strong> Indicates logging errors or corrupted records.</li>
+        <li><strong>Zero login frequency:</strong> Impossible if the learner has any recorded activity.</li>
+        <li><strong>Invalid age values:</strong> Age must be positive.</li>
+    </ul>
+
+    <div class="code-block">
+cleaned_df = (
+    cleaned_df
+    .filter(F.col("Average_Session_Duration_Min") > 0)
+    .filter(F.col("Login_Frequency") > 0)
+    .filter(F.col("Age") > 0)
+)
+    </div>
+
+    <p class="indent">
+        After filtering, the dataset retained approximately <strong>100,000 valid records</strong>,
+        indicating that the data was largely clean with minimal invalid entries.
+    </p>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 9-10: FEATURE ENGINEERING + MODEL SELECTION -->
+<!-- ============================================================== -->
+<div class="page">
+    <h2>6.3 Feature Engineering</h2>
+
+    <p class="indent">
+        Feature engineering is the process of selecting, transforming, and creating input variables
+        that the model uses for prediction. A total of <strong>21 features</strong> were carefully
+        selected from the available columns, grouped into four categories:
+    </p>
+
+    <p class="table-caption">Table 4: Feature Categories</p>
+    <table>
+        <thead>
+            <tr><th>Category</th><th>Features</th><th>Count</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Video & Content</td>
+                <td>Video_Completion_Rate, Rewatch_Count, Progress_Percentage</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>Quiz & Assessment</td>
+                <td>Quiz_Attempts, Quiz_Score_Avg, Project_Grade, Assignments_Submitted, Assignments_Missed</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>Session & Login</td>
+                <td>Login_Frequency, Average_Session_Duration_Min, Time_Spent_Hours, Days_Since_Last_Login</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>Engagement</td>
+                <td>Discussion_Participation, Peer_Interaction_Score, Notifications_Checked, App_Usage_Percentage, Reminder_Emails_Clicked, Support_Tickets_Raised, Satisfaction_Rating</td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>Course Metadata</td>
+                <td>Course_Duration_Days, Instructor_Rating</td>
+                <td>2</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>6.3.1 VectorAssembler</h3>
+    <p class="indent">
+        Spark MLlib requires all input features to be combined into a single vector column. The
+        <strong>VectorAssembler</strong> transformer takes 21 individual numeric columns and
+        outputs a single dense vector column named <code>"raw_features"</code>.
+    </p>
+
+    <h3>6.3.2 StandardScaler</h3>
+    <p class="indent">
+        Since the features have vastly different scales (e.g., Time_Spent_Hours ranges 0-100+
+        while Satisfaction_Rating is 1-5), <strong>StandardScaler</strong> was applied to normalize
+        all features to have <strong>mean = 0</strong> and <strong>standard deviation = 1</strong>.
+        This ensures that no single feature dominates the model simply due to its magnitude.
+    </p>
+
+    <h2>6.4 Model Selection — Logistic Regression</h2>
+
+    <p class="indent">
+        <strong>Logistic Regression</strong> was chosen as the classification algorithm for this
+        project for the following reasons:
+    </p>
+
+    <ol>
+        <li><strong>Interpretability:</strong> Unlike black-box models (e.g., neural networks),
+            Logistic Regression provides clear coefficients that indicate the direction and
+            strength of each feature's influence on the prediction.</li>
+        <li><strong>Efficiency:</strong> Logistic Regression trains quickly on large datasets,
+            making it ideal for a Spark-based pipeline processing 100K records.</li>
+        <li><strong>Baseline Model:</strong> It serves as a strong baseline for binary
+            classification tasks. If a simpler model captures the signal, adding complexity
+            may not be justified.</li>
+        <li><strong>Regularization:</strong> L2 regularization (Ridge, regParam=0.01) was applied
+            to prevent overfitting and improve generalization to unseen data.</li>
+    </ol>
+
+    <div class="code-block">
+lr = LogisticRegression(
+    featuresCol="features",
+    labelCol="label",
+    maxIter=100,
+    regParam=0.01,
+    elasticNetParam=0.0  # Pure L2 (Ridge) regularization
+)
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 11-12: IMPLEMENTATION -->
+<!-- ============================================================== -->
+<div class="page">
+    <h1>7. IMPLEMENTATION</h1>
+
+    <h2>7.1 Technology Stack</h2>
+
+    <p class="table-caption">Table 5: Technology Stack</p>
+    <table>
+        <thead>
+            <tr><th>Component</th><th>Technology</th><th>Version</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Programming Language</td><td>Python</td><td>3.10 / 3.11</td></tr>
+            <tr><td>Distributed Computing</td><td>Apache Spark (PySpark)</td><td>3.5.x</td></tr>
+            <tr><td>Machine Learning</td><td>Spark MLlib</td><td>Included in PySpark</td></tr>
+            <tr><td>Data Visualization</td><td>Matplotlib & Seaborn</td><td>Latest</td></tr>
+            <tr><td>Data Handling (Plots)</td><td>Pandas</td><td>Latest</td></tr>
+            <tr><td>Execution Mode</td><td>Local (spark-submit)</td><td>local[*]</td></tr>
+        </tbody>
+    </table>
+
+    <h2>7.2 Pipeline Architecture</h2>
+
+    <p class="indent">
+        The entire pipeline is implemented as a single Python script
+        (<code>mooc_completion_prediction.py</code>) consisting of 9 clearly delineated sections.
+        The Spark ML Pipeline chains the preprocessing and model stages together, ensuring
+        consistent transformations across training and testing data.
+    </p>
+
+    <div class="pipeline-step">
+        <strong>Step 1: Spark Session Initialization</strong><br>
+        Create a SparkSession configured for local mode with 4 GB driver memory and 8 shuffle partitions.
+    </div>
+
+    <div class="pipeline-step">
+        <strong>Step 2: Data Loading</strong><br>
+        Load the CSV file with automatic schema inference into a Spark DataFrame.
+    </div>
+
+    <div class="pipeline-step">
+        <strong>Step 3: Data Cleaning</strong><br>
+        Convert target to binary, impute nulls with medians, filter invalid entries.
+    </div>
+
+    <div class="pipeline-step">
+        <strong>Step 4: Feature Engineering</strong><br>
+        Select 21 features → VectorAssembler → StandardScaler.
+    </div>
+
+    <div class="pipeline-step">
+        <strong>Step 5: Train-Test Split</strong><br>
+        80/20 split with seed=42 for reproducibility.
+    </div>
+
+    <div class="pipeline-step">
+        <strong>Step 6: Model Training</strong><br>
+        Logistic Regression with L2 regularization (regParam=0.01, maxIter=100).
+    </div>
+
+    <div class="pipeline-step">
+        <strong>Step 7: Model Evaluation</strong><br>
+        Compute Accuracy, F1-Score, AUC-ROC, Precision, Recall, Confusion Matrix.
+    </div>
+
+    <div class="pipeline-step">
+        <strong>Step 8: Visualization</strong><br>
+        Generate class distribution and feature importance charts.
+    </div>
+
+    <div class="pipeline-step">
+        <strong>Step 9: Cleanup</strong><br>
+        Stop Spark session and release resources.
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 12-13: CODE IMPLEMENTATION -->
+<!-- ============================================================== -->
+<div class="page">
+    <h2>7.3 Code Implementation</h2>
+
+    <h3>7.3.1 Spark Session Creation</h3>
+    <div class="code-block">
+spark = (
+    SparkSession.builder
+    .appName("MOOC_Course_Completion_Prediction")
+    .master("local[*]")
+    .config("spark.driver.memory", "4g")
+    .config("spark.sql.shuffle.partitions", "8")
+    .config("spark.ui.showConsoleProgress", "false")
+    .getOrCreate()
+)
+spark.sparkContext.setLogLevel("WARN")
+    </div>
+
+    <h3>7.3.2 Feature Assembly and Scaling</h3>
+    <div class="code-block">
+assembler = VectorAssembler(
+    inputCols=feature_columns,     # 21 feature columns
+    outputCol="raw_features",
+    handleInvalid="skip"
+)
+
+scaler = StandardScaler(
+    inputCol="raw_features",
+    outputCol="features",
+    withMean=True,
+    withStd=True
+)
+    </div>
+
+    <h3>7.3.3 Pipeline Construction and Training</h3>
+    <div class="code-block">
+pipeline = Pipeline(stages=[assembler, scaler, lr])
+pipeline_model = pipeline.fit(train_df)
+    </div>
+
+    <h3>7.3.4 Model Evaluation</h3>
+    <div class="code-block">
+predictions = pipeline_model.transform(test_df)
+
+accuracy_eval = MulticlassClassificationEvaluator(
+    labelCol="label", predictionCol="prediction", metricName="accuracy"
+)
+accuracy = accuracy_eval.evaluate(predictions)
+
+f1_eval = MulticlassClassificationEvaluator(
+    labelCol="label", predictionCol="prediction", metricName="f1"
+)
+f1_score = f1_eval.evaluate(predictions)
+
+auc_eval = BinaryClassificationEvaluator(
+    labelCol="label", rawPredictionCol="rawPrediction",
+    metricName="areaUnderROC"
+)
+auc_roc = auc_eval.evaluate(predictions)
+    </div>
+
+    <h3>7.3.5 Running the Pipeline</h3>
+    <div class="code-block">
+# Option A: spark-submit (recommended)
+spark-submit mooc_completion_prediction.py
+
+# Option B: Direct Python
+python mooc_completion_prediction.py
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 14-15: RESULTS AND ANALYSIS -->
+<!-- ============================================================== -->
+<div class="page">
+    <h1>8. RESULTS AND ANALYSIS</h1>
+
+    <h2>8.1 Model Performance Metrics</h2>
+
+    <p class="indent">
+        The trained Logistic Regression model was evaluated on the 20% held-out test set.
+        The following performance metrics were obtained:
+    </p>
+
+    <p class="table-caption">Table 6: Model Performance Metrics</p>
+    <table>
+        <thead>
+            <tr><th>Metric</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Accuracy</strong></td><td><strong>60.06%</strong></td></tr>
+            <tr><td><strong>F1-Score</strong></td><td><strong>0.6005</strong></td></tr>
+            <tr><td><strong>AUC-ROC</strong></td><td><strong>0.6392</strong></td></tr>
+            <tr><td>Precision</td><td>0.6005</td></tr>
+            <tr><td>Recall</td><td>0.6006</td></tr>
+        </tbody>
+    </table>
+
+    <div class="metric-highlight">
+        <strong>Key Observation:</strong> The model achieves an accuracy of 60.06% with an AUC-ROC
+        of 0.6392. Given that the dataset is nearly balanced (51% dropout vs 49% completion),
+        a random baseline would achieve approximately 50% accuracy. The model therefore performs
+        approximately <strong>10 percentage points above random chance</strong>, indicating that
+        the behavioral features contain meaningful predictive signal for course completion.
+    </div>
+
+    <h2>8.2 Confusion Matrix</h2>
+
+    <p class="indent">
+        The confusion matrix provides a detailed breakdown of correct and incorrect predictions
+        for each class:
+    </p>
+
+    <p class="table-caption">Table 7: Confusion Matrix</p>
+    <table class="confusion-matrix">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Predicted: Dropout (0)</th>
+                <th>Predicted: Completed (1)</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Actual: Dropout (0)</th>
+                <td class="correct">6,247 ✓</td>
+                <td class="incorrect">3,891 ✗</td>
+                <td><strong>10,138</strong></td>
+            </tr>
+            <tr>
+                <th>Actual: Completed (1)</th>
+                <td class="incorrect">4,044 ✗</td>
+                <td class="correct">5,684 ✓</td>
+                <td><strong>9,728</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p class="indent">
+        <strong>Analysis of Confusion Matrix:</strong>
+    </p>
+    <ul>
+        <li><strong>True Negatives (6,247):</strong> Dropout students correctly identified as dropouts.</li>
+        <li><strong>True Positives (5,684):</strong> Completed students correctly identified as completers.</li>
+        <li><strong>False Positives (3,891):</strong> Dropout students incorrectly predicted as completers.</li>
+        <li><strong>False Negatives (4,044):</strong> Completed students incorrectly predicted as dropouts.</li>
+    </ul>
+
+    <p class="indent">
+        The model shows relatively balanced performance across both classes, with slightly better
+        prediction accuracy for the dropout class (61.6% accuracy) compared to the completion
+        class (58.4% accuracy). This balanced performance ensures the model is not biased
+        toward predicting only one class.
+    </p>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 15-16: VISUALIZATIONS -->
+<!-- ============================================================== -->
+<div class="page">
+    <h2>8.3 Visualizations</h2>
+
+    <h3>8.3.1 Completion vs. Dropout Distribution</h3>
+
+    <p class="indent">
+        The following chart shows the distribution of course completion outcomes in the dataset.
+        The dataset is nearly balanced with 51% dropout and 49% completion, which is favorable
+        for model training as it prevents class imbalance bias.
+    </p>
+
+    <div class="figure">
+        <img src="../completion_vs_dropout.png" alt="Completion vs Dropout Distribution">
+        <div class="figure-caption">Figure 1: Completion vs. Dropout — Bar Chart and Pie Chart showing class distribution</div>
+    </div>
+
+    <p class="indent">
+        The bar chart (left) shows the absolute count of learners in each category, while the
+        pie chart (right) illustrates the percentage distribution. The nearly equal split (51:49)
+        indicates that the dataset does not suffer from class imbalance, making accuracy a
+        meaningful evaluation metric.
+    </p>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 16: FEATURE IMPORTANCE -->
+<!-- ============================================================== -->
+<div class="page">
+    <h3>8.3.2 Feature Importance Analysis</h3>
+
+    <p class="indent">
+        One of the key advantages of Logistic Regression is its interpretability. The model
+        coefficients indicate the direction and strength of each feature's influence on the
+        prediction of course completion.
+    </p>
+
+    <div class="figure">
+        <img src="../model_feature_importance.png" alt="Feature Importance - Logistic Regression Coefficients">
+        <div class="figure-caption">Figure 2: Feature Importance — Logistic Regression Coefficients</div>
+    </div>
+
+    <p class="indent"><strong>Key Findings from Feature Importance Analysis:</strong></p>
+
+    <p class="table-caption">Table 8: Top Predictive Features</p>
+    <table>
+        <thead>
+            <tr><th>Rank</th><th>Feature</th><th>Effect on Completion</th><th>Interpretation</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Video_Completion_Rate</td><td style="color:green;">Strong Positive ↑</td><td>Higher video completion strongly predicts course completion</td></tr>
+            <tr><td>2</td><td>Progress_Percentage</td><td style="color:green;">Strong Positive ↑</td><td>Higher progress directly correlates with completion</td></tr>
+            <tr><td>3</td><td>Time_Spent_Hours</td><td style="color:green;">Strong Positive ↑</td><td>More time investment leads to higher completion</td></tr>
+            <tr><td>4</td><td>Quiz_Score_Avg</td><td style="color:green;">Positive ↑</td><td>Better quiz performance correlates with persistence</td></tr>
+            <tr><td>5</td><td>Days_Since_Last_Login</td><td style="color:red;">Negative ↓</td><td>Longer absence strongly predicts dropout</td></tr>
+            <tr><td>6</td><td>Assignments_Missed</td><td style="color:red;">Negative ↓</td><td>Missing assignments is a dropout indicator</td></tr>
+        </tbody>
+    </table>
+
+    <p class="indent">
+        These findings are consistent with educational research literature and provide actionable
+        insights for MOOC platform designers. For example, platforms could trigger <strong>early
+        intervention alerts</strong> when a student's video completion rate drops below a threshold
+        or when their days-since-last-login exceeds a critical period.
+    </p>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 17: CONCLUSION + FUTURE SCOPE -->
+<!-- ============================================================== -->
+<div class="page">
+    <h1>9. CONCLUSION</h1>
+
+    <p class="indent">
+        This project successfully demonstrates the application of <strong>Apache Spark</strong>
+        and <strong>Spark MLlib</strong> for building a scalable MOOC course completion prediction
+        pipeline. Using 100,000 clickstream records with 39 columns, the pipeline performs
+        comprehensive data cleaning, engineers 21 behavioral features, and trains a Logistic
+        Regression classifier with L2 regularization.
+    </p>
+
+    <p class="indent">
+        The model achieves an <strong>accuracy of 60.06%</strong>, an <strong>F1-Score of 0.6005</strong>,
+        and an <strong>AUC-ROC of 0.6392</strong>. While these metrics indicate moderate predictive
+        performance, they are meaningful given the balanced nature of the dataset (51% dropout vs 49%
+        completion) where random chance would yield approximately 50% accuracy. The model consistently
+        performs 10 percentage points above baseline across all metrics.
+    </p>
+
+    <p class="indent">
+        The feature importance analysis reveals that <strong>Video Completion Rate</strong>,
+        <strong>Progress Percentage</strong>, and <strong>Time Spent on the Platform</strong>
+        are the strongest positive predictors of course completion, while <strong>Days Since
+        Last Login</strong> and <strong>Assignments Missed</strong> are the strongest negative
+        predictors (indicators of dropout). These insights can directly inform early intervention
+        strategies for MOOC platforms.
+    </p>
+
+    <p class="indent">
+        The project validates the feasibility and utility of using distributed computing frameworks
+        like Apache Spark for educational data mining at scale, demonstrating that even a simple
+        linear model can extract meaningful predictive signals from clickstream behavioral data.
+    </p>
+
+    <h1>10. FUTURE SCOPE</h1>
+
+    <ol>
+        <li><strong>Advanced Models:</strong> Implement ensemble methods such as Random Forest,
+            Gradient Boosted Trees (GBT), or XGBoost to potentially improve prediction accuracy
+            beyond the 60.06% achieved by Logistic Regression.</li>
+        <li><strong>Deep Learning Integration:</strong> Explore LSTM/GRU-based models to capture
+            temporal patterns in sequential clickstream data, as learner behavior evolves over
+            the course duration.</li>
+        <li><strong>Feature Expansion:</strong> Incorporate additional features such as natural
+            language processing (NLP) on forum posts, social network analysis of peer interactions,
+            and temporal features capturing learning rhythm patterns.</li>
+        <li><strong>Hyperparameter Optimization:</strong> Use Spark MLlib's CrossValidator with
+            ParamGridBuilder to systematically tune regularization strength, elastic net mixing
+            ratio, and maximum iterations.</li>
+        <li><strong>Real-time Prediction:</strong> Deploy the model as a real-time streaming
+            pipeline using Spark Structured Streaming, enabling live early-warning systems
+            for at-risk learners.</li>
+        <li><strong>Cluster Deployment:</strong> Scale the pipeline from local mode to a
+            multi-node Spark cluster (e.g., on AWS EMR or Google Dataproc) to handle datasets
+            with millions of records from production MOOC platforms.</li>
+        <li><strong>Class Imbalance Handling:</strong> Apply techniques such as SMOTE or
+            cost-sensitive learning for datasets with significant class imbalance.</li>
+    </ol>
+</div>
+
+<!-- ============================================================== -->
+<!-- PAGE 18: REFERENCES -->
+<!-- ============================================================== -->
+<div class="page">
+    <h1>11. REFERENCES</h1>
+
+    <ol style="line-height: 2.0;">
+        <li>
+            Xing, W., Chen, X., Stein, J., & Marcinkowski, M. (2016). "Temporal predication of
+            dropouts in MOOCs: Reaching the low hanging fruit through stacking generalization."
+            <em>Computers in Human Behavior</em>, 58, 119-129.
+        </li>
+        <li>
+            Fei, M., & Yeung, D.-Y. (2015). "Temporal models for predicting student dropout in
+            massive open online courses." <em>IEEE International Conference on Data Mining Workshops
+            (ICDMW)</em>, 256-263.
+        </li>
+        <li>
+            Chen, Y., Zhang, Q., & Guo, B. (2020). "Dropout prediction in MOOCs using big data
+            analytics and machine learning." <em>IEEE Access</em>, 8, 187458-187468.
+        </li>
+        <li>
+            Whitehill, J., Mohan, K., Seaton, D., Rosen, Y., & Tingley, D. (2017). "MOOC Dropout
+            Prediction: How to Measure Accuracy?" <em>Proceedings of the Fourth ACM Conference on
+            Learning @ Scale</em>.
+        </li>
+        <li>
+            Apache Spark Documentation (2024). "MLlib: Machine Learning Library."
+            <em>spark.apache.org/docs/latest/ml-guide.html</em>.
+        </li>
+        <li>
+            Zaharia, M., et al. (2016). "Apache Spark: A Unified Engine for Big Data Processing."
+            <em>Communications of the ACM</em>, 59(11), 56-65.
+        </li>
+        <li>
+            Jordan, K. (2015). "Massive Open Online Course Completion Rates Revisited: Assessment,
+            Length and Attrition." <em>International Review of Research in Open and Distributed
+            Learning</em>, 16(3), 341-358.
+        </li>
+        <li>
+            Pedregosa, F., et al. (2011). "Scikit-learn: Machine Learning in Python."
+            <em>Journal of Machine Learning Research</em>, 12, 2825-2830.
+        </li>
+        <li>
+            McKinney, W. (2010). "Data Structures for Statistical Computing in Python."
+            <em>Proceedings of the 9th Python in Science Conference</em>, 51-56.
+        </li>
+        <li>
+            Hunter, J. D. (2007). "Matplotlib: A 2D Graphics Environment."
+            <em>Computing in Science & Engineering</em>, 9(3), 90-95.
+        </li>
+    </ol>
+
+    <br><br>
+    <hr>
+    <p style="text-align: center; font-size: 10pt; color: #666; margin-top: 20px;">
+        <em>— End of Report —</em>
+    </p>
+</div>
+
+</body>
+</html>
