@@ -1,0 +1,17 @@
+{
+  "name": "cluster_ca2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "create_ppt.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/M1D0R1x/Cluster_CA2.git"
+  },
+  "private": true,
+  "dependencies": {
+    "pptxgenjs": "^4.0.1"
+  }
+}
