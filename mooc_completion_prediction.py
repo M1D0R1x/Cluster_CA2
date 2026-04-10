@@ -101,7 +101,7 @@ print(f"    App name      : {spark.sparkContext.appName}")
 #   - Payment info
 #   - TARGET: "Completed" column → "Completed" or "Not Completed"
 
-CSV_PATH = "/Course_Completion_Prediction.csv"
+CSV_PATH = "Course_Completion_Prediction.csv"
 
 # ── Safety check: does the file exist? ────────────────────────────────────
 if not os.path.isfile(CSV_PATH):
